@@ -1001,6 +1001,47 @@ dljxl7five6nrzfh5one`;
 
 const splitLines = lines.split("\n");
 
+const NUMBERS = [
+  "one",
+  "two",
+  "three",
+  "four",
+  "five",
+  "six",
+  "seven",
+  "eight",
+  "nine",
+];
+
+function getAlpebeticalNumberInformation() {}
+
+function getIndexOfFirstAlphabeticalNumber(text: string) {
+  let currentLowestIndex = text.length;
+  let currentLowestNumber: undefined | number = undefined;
+
+  for (var i = 1; i <= 9; i++) {
+    var currentNumberText = NUMBERS[i - 1];
+
+    let indexOf = text.indexOf(currentNumberText);
+
+    if (indexOf === -1) {
+      continue;
+    }
+
+    if (indexOf < currentLowestIndex) {
+      currentLowestIndex = indexOf;
+      currentLowestNumber = i;
+    }
+  }
+
+  return currentLowestNumber;
+}
+
+function getFirstNumber(text: string) {
+  const firstNumberDigit = getFirstDigit(text);
+  const firstAlphaDigit = getFi;
+}
+
 function getFirstDigit(text: string) {
   for (var i = 0; i <= text.length; i++) {
     if (isNumeric(text[i])) {

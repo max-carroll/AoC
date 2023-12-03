@@ -142,8 +142,6 @@ function getGameDataFromLine(line: string) {
     .split(";")
     .map((s) => getSubsetFromString(s));
 
-  //
-
   const result: Game = {
     id,
     subsets,
@@ -165,3 +163,27 @@ function getSubsetFromString(subsetString: string): CubeInfo {
 }
 
 const games = ParseData();
+
+function IsGamePossibleWIthThese(
+  game: Game,
+  redMax: number,
+  greenMax: number,
+  blueMax: number
+) {
+  for (var subset of game.subsets) {
+    const blue = subset.blue ?? 0;
+    const red = subset.red ?? 0;
+    const green = subset.red ?? 0;
+
+    if (blue > blueMax || red > redMax || green > greenMax) {
+      return false;
+    }
+  }
+  return true;
+}
+
+games.forEach((game) => {
+  const isPossible = IsGamePossibleWIthThese(game, 12, 13, 14);
+
+  console.log({ game, isPossible });
+});

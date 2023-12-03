@@ -118,8 +118,8 @@ function getColourFromString(s: string, colour: string): number {
 }
 
 //parse data
-function ParseData(): Array<Game> {
-  const textLines = rawInput.split("\n");
+export function ParseData(rawDatastring: string): Array<Game> {
+  const textLines = rawDatastring.split("\n");
 
   console.log(textLines);
 
@@ -162,7 +162,7 @@ function getSubsetFromString(subsetString: string): CubeInfo {
   return result;
 }
 
-const games = ParseData();
+const games = ParseData(rawInput);
 
 export function IsGamePossibleWIthThese(
   game: Game,
@@ -196,3 +196,22 @@ games.forEach((game) => {
 });
 
 console.log("sum", sumOfIds);
+
+export function GetMinimumCubesRequiredForGame(game: Game): CubeInfo {
+  let maxBlue = 0;
+  let maxRed = 0;
+  let maxGreen = 0;
+  for (var subset of game.subsets) {
+    if (subset.blue && subset.blue > maxBlue) {
+      maxBlue = subset!.blue;
+    }
+    if (subset.red && subset.red > maxRed) {
+      maxRed = subset!.red;
+    }
+    if (subset.green && subset.green > maxGreen) {
+      maxGreen = subset!.green;
+    }
+  }
+
+  return { red: maxRed, green: maxGreen, blue: maxBlue };
+}

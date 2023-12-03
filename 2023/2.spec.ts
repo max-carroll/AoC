@@ -1,6 +1,11 @@
 import assert from "assert";
 import test from "node:test";
-import { Game, IsGamePossibleWIthThese } from "./2";
+import {
+  Game,
+  GetMinimumCubesRequiredForGame,
+  IsGamePossibleWIthThese,
+  ParseData,
+} from "./2";
 
 test("should not be possible if too many greens", () => {
   const game: Game = {
@@ -14,4 +19,19 @@ test("should not be possible if too many greens", () => {
 
   const possible = IsGamePossibleWIthThese(game, 12, 13, 14);
   assert.equal(possible, false);
+});
+
+// Part2 Test Input
+
+test("getMinimumCubesRequiredForEachGame 1", () => {
+  const rawInput = `Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
+    Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
+    Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
+    Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
+    Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green`;
+
+  const [game1, game2, game3, game4, game5] = ParseData(rawInput);
+
+  const minForGame1 = GetMinimumCubesRequiredForGame(game1);
+  assert.deepStrictEqual(minForGame1, { blue: 6, red: 4, green: 2 });
 });

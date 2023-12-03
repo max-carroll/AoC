@@ -93,6 +93,21 @@ test("should get adjacent coords, if a number has a larger length than 1", () =>
   assert.equal(adjacentCoords.length, 12);
 });
 
+/**
+ *    -1,-1  -1,0   -1,1
+ *    0,-1  (0,0)  [0,1]
+ *    1,-1  [1,0]  [1,1]
+ */
+test("adjacent coords cant be less than 0", () => {
+  const adjacentCoords = getAdjacentCoords(0, 0);
+
+  assertHasCoordinates(adjacentCoords, [0, 1]);
+  assertHasCoordinates(adjacentCoords, [1, 0]);
+  assertHasCoordinates(adjacentCoords, [1, 1]);
+
+  assert.equal(adjacentCoords.length, 3);
+});
+
 // test("thingy", () => {
 //   const matches =
 //     ".........................3.......................................94...............806....................596.........793...........186......".matchAll(

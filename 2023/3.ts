@@ -176,38 +176,24 @@ export function getAdjacentCoords(
     array.push([lineIndex + 1, stringIndex + stringIndexAdjustment]);
   }
 
-  //   let result = Array.from(array);
-
-  //   for ()
-
-  // delete entries that are part of the number
-  // for (
-  //     var currentIndex = stringIndex;
-  //     currentIndex <= stringIndex + numberLength;
-  //     currentIndex++
-  //   ) {
-  //     array = array.filter(([li, si]) => li !== lineIndex || si !== currentIndex);
-  //   }
-
+  // delete the ones which are part of the number
   for (var i = 1; i <= +numberLength; i++) {
     array = array.filter(
       ([x, y]) => x !== lineIndex || y !== stringIndex - 1 + i
     );
   }
 
-  return array;
+  const itemsToDelete = array.filter(([li, si]) => li < 0 || si < 0);
 
-  //   return [
-  //     [lineIndex - 1, stringIndex - 1],
-  //     [lineIndex - 1, stringIndex],
-  //     [lineIndex - 1, stringIndex + 1],
-  //     [lineIndex, stringIndex - 1],
-  //     [lineIndex, stringIndex + 1],
-  //     [lineIndex + 1, stringIndex - 1],
-  //     [lineIndex + 1, stringIndex],
-  //     [lineIndex + 1, stringIndex + 1],
-  //   ];
+  itemsToDelete.forEach((element) => {
+    const indexToRemove = array.indexOf(element);
+    array.splice(indexToRemove, 1);
+  });
+
+  return array;
 }
+
+// const getPar;
 
 const matches =
   ".........................3.......................................94...............806....................596.........793...........186......".matchAll(

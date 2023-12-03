@@ -393,3 +393,38 @@ export function GetStarLocations(
   });
   return starLocations;
 }
+
+function part2() {
+  const lines = getSplit(rawInput);
+  const matrix = LinesToMatrix(lines);
+  const starLocations = GetStarLocations(matrix);
+
+  let totalSoFar = 0;
+
+  const finalPartNumberPairs: Array<[number, number]> = [];
+
+  for (var starLocation of starLocations) {
+    const [lineNumber, strIndex] = starLocation;
+    const partNumbersForStarLocations = getPartNumbersAdjacentTo(
+      matrix,
+      lineNumber,
+      strIndex
+    );
+
+    if (partNumbersForStarLocations.length === 2) {
+      const [p1, p2] = partNumbersForStarLocations;
+
+      finalPartNumberPairs.push([p1, p2]);
+
+      const gearRatio = p1 * p2;
+
+      totalSoFar += gearRatio;
+    }
+  }
+
+  console.log("gears - totalSoFar", totalSoFar);
+
+  // Final Bit - just multiply them to gether and add them up
+}
+
+part2();

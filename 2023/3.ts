@@ -377,3 +377,19 @@ function GetNumberPartsFromLineOfInterest(
   }
   return adjacentPartNumbers;
 }
+
+export function GetStarLocations(
+  matrix: Array<Array<string>>
+): Array<[number, number]> {
+  let starLocations: Array<[number, number]> = [];
+  matrix.forEach((line, lineNumber) => {
+    const matches = line.join("").matchAll(/\*/g);
+
+    for (var match of matches) {
+      if (match && match.index !== undefined) {
+        starLocations.push([lineNumber, match.index]);
+      }
+    }
+  });
+  return starLocations;
+}

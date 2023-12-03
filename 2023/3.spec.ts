@@ -2,6 +2,7 @@ import assert from "assert";
 import test from "node:test";
 import {
   GetPartNumbers,
+  GetStarLocations,
   IsASymbol,
   LinesToMatrix,
   getAdjacentCoords,
@@ -220,4 +221,30 @@ test("get part numbers around stars", () => {
 
   const last = getPartNumbersAdjacentTo(matrix, 8, 5);
   assert.deepStrictEqual(last, [755, 598]);
+});
+
+test("get all star locations", () => {
+  const testInput = `467..114..
+...*......
+..35..633.
+......#...
+617*......
+.....+.58.
+..592.....
+......755.
+...$.*....
+.664.598..`;
+  const split = getSplit(testInput);
+  const matrix = LinesToMatrix(split);
+
+  const starLocations = GetStarLocations(matrix);
+
+  [
+    [1, 3],
+    [4, 3],
+    [8, 5],
+  ].forEach(
+    ([line, strIndex], index) =>
+      starLocations[index][0] === line && starLocations[index][1] === strIndex
+  );
 });

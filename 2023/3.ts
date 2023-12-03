@@ -215,9 +215,12 @@ function GetPartNumbersFromLine(
         posssiblePartNumber.length
       );
 
-      const theresSomeAdjacentSymbols = adjacentCoords.some(([li, si]) =>
+      const adjacentCoordsWithSymbols = adjacentCoords.filter(([li, si]) =>
         MatrixContainsSymbolAt(matrix, [li, si])
       );
+
+      const theresSomeAdjacentSymbols = adjacentCoordsWithSymbols.length > 0;
+
       if (theresSomeAdjacentSymbols) {
         const partNumberAsInt = parseInt(posssiblePartNumber, 10);
         partNumbers.push(partNumberAsInt);
@@ -235,10 +238,11 @@ export function MatrixContainsSymbolAt(
 
   if (matrix[lineIndex] && matrix[lineIndex][stringIndex]) {
     const character = matrix[lineIndex][stringIndex];
-    // If its not a dot or a number, then it must be a symbol
-    const justADotOrNumber = !character.match(/[\d.]/);
-    return !justADotOrNumber;
+
+    return IsASymbol(character);
   }
+
+  return false;
 }
 
 export function GetPartNumbers(matrix: Array<Array<string>>): Array<number> {
@@ -252,4 +256,9 @@ export function GetPartNumbers(matrix: Array<Array<string>>): Array<number> {
   });
 
   return partNumbers;
+}
+
+export function IsASymbol(s: string): boolean {
+  const justADotOrNumber = s.match(/[\d.]/);
+  return !justADotOrNumber;
 }

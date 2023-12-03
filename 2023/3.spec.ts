@@ -2,6 +2,7 @@ import assert from "assert";
 import test from "node:test";
 import {
   GetPartNumbers,
+  IsASymbol,
   LinesToMatrix,
   getAdjacentCoords,
   getSplit,
@@ -128,15 +129,15 @@ test("adjacent coords cant be less than 0", () => {
 // });
 test("small example", () => {
   const testInput = `467..114..
-  ...*......
-  ..35..633.
-  ......#...
-  617*......
-  .....+.58.
-  ..592.....
-  ......755.
-  ...$.*....
-  .664.598..`;
+...*......
+..35..633.
+......#...
+617*......
+.....+.58.
+..592.....
+......755.
+...$.*....
+.664.598..`;
 
   const split = getSplit(testInput);
   const matrix = LinesToMatrix(split);
@@ -144,4 +145,56 @@ test("small example", () => {
   const partNumbers = GetPartNumbers(matrix);
 
   assert(partNumbers[0] === 467);
+  assert(partNumbers[1] === 35);
+});
+
+test("should return coordinates adjacent to number - failing example 1", () => {
+  const adjacentCoords = getAdjacentCoords(0, 5, 3);
+
+  /**
+   *
+   *      0,4 (0,5) [0,6] [0,7] 0,8
+   *      1,4  1,5   1,6   1,7  1,8
+   */
+  console.log(adjacentCoords);
+  assertHasCoordinates(adjacentCoords, [0, 4]);
+  assertHasCoordinates(adjacentCoords, [0, 8]);
+
+  assertHasCoordinates(adjacentCoords, [1, 4]);
+  assertHasCoordinates(adjacentCoords, [1, 5]);
+  assertHasCoordinates(adjacentCoords, [1, 6]);
+  assertHasCoordinates(adjacentCoords, [1, 7]);
+  assertHasCoordinates(adjacentCoords, [1, 8]);
+
+  assert.equal(adjacentCoords.length, 7);
+});
+
+// test("matrix contains symbol at", () => {
+//   const testInput = `467..114..
+//   ...*......
+//   ..35..633.
+//   ......#...
+//   617*......
+//   .....+.58.
+//   ..592.....
+//   ......755.
+//   ...$.*....
+//   .664.598..`;
+
+//   const split = getSplit(testInput);
+//   const matrix = LinesToMatrix(split);
+
+//   const shouldContainSymbol = [
+//     [0, 4], // .
+//     [1, 4], // *
+//     [1, 6], // .
+//     [1, 7],
+//     [0, 8],
+//     [1, 8],
+//   ];
+// });
+
+test("is not a symbol .", () => {
+  const result = IsASymbol(".");
+  assert(result === false);
 });

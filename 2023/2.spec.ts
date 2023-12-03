@@ -34,4 +34,10 @@ test("getMinimumCubesRequiredForEachGame 1", () => {
 
   const minForGame1 = GetMinimumCubesRequiredForGame(game1);
   assert.deepStrictEqual(minForGame1, { blue: 6, red: 4, green: 2 });
+
+  const minForGame2 = GetMinimumCubesRequiredForGame(game2);
+  assert.deepStrictEqual(minForGame2, { blue: 4, red: 1, green: 3 });
+
+  const minForGame3 = GetMinimumCubesRequiredForGame(game3);
+  assert.deepStrictEqual(minForGame3, { red: 20, green: 13, blue: 6 });
 });

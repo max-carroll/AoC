@@ -99,7 +99,7 @@ Game 98: 5 blue, 2 green, 8 red; 12 red; 13 red, 4 blue, 4 green; 7 red, 11 blue
 Game 99: 4 green, 2 blue, 4 red; 9 blue, 11 red, 1 green; 5 green
 Game 100: 2 blue, 12 green; 6 green, 1 red, 12 blue; 1 green, 5 blue, 1 red; 1 red, 12 green, 6 blue; 16 blue, 3 green`;
 
-interface Game {
+export interface Game {
   id: number;
   subsets: Array<CubeInfo>;
 }
@@ -164,7 +164,7 @@ function getSubsetFromString(subsetString: string): CubeInfo {
 
 const games = ParseData();
 
-function IsGamePossibleWIthThese(
+export function IsGamePossibleWIthThese(
   game: Game,
   redMax: number,
   greenMax: number,
@@ -173,7 +173,7 @@ function IsGamePossibleWIthThese(
   for (var subset of game.subsets) {
     const blue = subset.blue ?? 0;
     const red = subset.red ?? 0;
-    const green = subset.red ?? 0;
+    const green = subset.green ?? 0;
 
     if (blue > blueMax || red > redMax || green > greenMax) {
       return false;
@@ -182,8 +182,15 @@ function IsGamePossibleWIthThese(
   return true;
 }
 
+let sumOfIds = 0;
+
 games.forEach((game) => {
   const isPossible = IsGamePossibleWIthThese(game, 12, 13, 14);
 
-  console.log({ game, isPossible });
+  if (isPossible) {
+    sumOfIds += game.id;
+    // console.log({ game, isPossible });
+  }
+
+  console.log(game, "isPossible:", isPossible);
 });

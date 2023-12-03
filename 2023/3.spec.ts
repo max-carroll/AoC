@@ -144,8 +144,9 @@ test("small example", () => {
 
   const partNumbers = GetPartNumbers(matrix);
 
-  assert(partNumbers[0] === 467);
-  assert(partNumbers[1] === 35);
+  [467, 35, 633, 617, 592, 755, 664, 598].forEach((num, index) =>
+    assert(partNumbers[index] === num)
+  );
 });
 
 test("should return coordinates adjacent to number - failing example 1", () => {

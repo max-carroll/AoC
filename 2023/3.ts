@@ -338,7 +338,7 @@ function GetNumberPartsFromLineOfInterest(
   let currentIndex = stringIndexOfStar - 1;
   let iterations = 1;
   while (currentIndex >= 0 && lineOfInterest[currentIndex] && iterations <= 3) {
-    if (lineOfInterest[currentIndex].match(/\d/)) {
+    if (lineOfInterest[currentIndex].match(/\d/g)) {
       const currentDigitItem = lineOfInterest[currentIndex];
       adjacentReleveant.unshift(currentDigitItem);
       iterations++;
@@ -349,18 +349,18 @@ function GetNumberPartsFromLineOfInterest(
   }
 
   // look ahead and put digits on end
-  currentIndex = stringIndexOfStar - 1;
+  currentIndex = stringIndexOfStar + 1;
   iterations = 1;
   while (
-    currentIndex >= lineOfInterest.length &&
+    currentIndex <= lineOfInterest.length &&
     lineOfInterest[currentIndex] &&
     iterations <= 3
   ) {
-    if (lineOfInterest[currentIndex].match(/\d/)) {
+    if (lineOfInterest[currentIndex].match(/\d/g)) {
       const currentDigitItem = lineOfInterest[currentIndex];
       adjacentReleveant.push(currentDigitItem);
       iterations++;
-      currentIndex--;
+      currentIndex++;
     } else {
       break; // no more digits
     }
@@ -368,7 +368,7 @@ function GetNumberPartsFromLineOfInterest(
 
   const finalRelevantString = adjacentReleveant.join("");
 
-  const matches = finalRelevantString.matchAll(/\d/);
+  const matches = finalRelevantString.matchAll(/\d+/g);
 
   for (var match of matches) {
     if (match && match[0]) {

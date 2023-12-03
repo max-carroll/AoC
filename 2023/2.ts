@@ -215,3 +215,7 @@ export function GetMinimumCubesRequiredForGame(game: Game): CubeInfo {
 
   return { red: maxRed, green: maxGreen, blue: maxBlue };
 }
+
+export function GetPowerOfCubes({ green, red, blue }: CubeInfo): number {
+  return (green ?? 0) * (red ?? 0) * (blue ?? 0);
+}

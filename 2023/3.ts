@@ -197,20 +197,17 @@ function GetPartNumbersFromLine(
   matrix: Array<Array<string>>,
   lineNumber: number
 ): Array<number> {
-  // const matches =
-  //   ".........................3.......................................94...............806....................596.........793...........186......".matchAll(
-  //     /\d+/g
-  //   );
-
   const line = matrix[lineNumber];
   const partNumbers: Array<number> = [];
 
-  const matches = line.join().matchAll(/\d+/g);
+  const joined = line.join("");
+  console.log("joined", joined);
+  const matches = joined.matchAll(/\d+/g);
 
   for (var match of matches) {
     console.log(match);
 
-    if (match.index) {
+    if (match.index !== undefined) {
       const posssiblePartNumber = match[0];
       const adjacentCoords = getAdjacentCoords(
         lineNumber,

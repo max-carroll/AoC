@@ -1012,10 +1012,22 @@ const NUMBERS = [
   "eight",
   "nine",
 ];
+function isNumeric(str: string) {
+  const numeric = parseInt(str, 10);
 
-function getAlpebeticalNumberInformation() {}
+  if (isNaN(numeric)) {
+    return false;
+  } else {
+    return true;
+  }
+}
 
-function getIndexOfFirstAlphabeticalNumber(text: string) {
+interface AlphaNumberInfo {
+  number?: number;
+  index: number;
+}
+
+function getFirstAlphabeticalNumberInfo(text: string): AlphaNumberInfo {
   let currentLowestIndex = text.length;
   let currentLowestNumber: undefined | number = undefined;
 
@@ -1034,12 +1046,53 @@ function getIndexOfFirstAlphabeticalNumber(text: string) {
     }
   }
 
-  return currentLowestNumber;
+  return { number: currentLowestNumber, index: currentLowestIndex };
+}
+
+function getLastAlphabeticalNumberInfo(text: string): AlphaNumberInfo {
+  let currentHighestIndex = 0;
+  let currentHighestNumber: undefined | number = undefined;
+
+  for (var i = 1; i <= 9; i++) {
+    var currentNumberText = NUMBERS[i - 1];
+
+    let indexOf = text.lastIndexOf(currentNumberText);
+
+    if (indexOf === -1) {
+      continue;
+    }
+
+    if (indexOf > currentHighestIndex) {
+      currentHighestIndex = indexOf;
+      currentHighestNumber = i;
+    }
+  }
+
+  return { number: currentHighestNumber, index: currentHighestIndex };
 }
 
 function getFirstNumber(text: string) {
   const firstNumberDigit = getFirstDigit(text);
-  const firstAlphaDigit = getFi;
+  const firstAlphaInfo = getFirstAlphabeticalNumberInfo(text);
+
+  const indexOfFirstNumberDigit = text.indexOf(`${firstNumberDigit}`);
+
+  if (firstAlphaInfo.index < indexOfFirstNumberDigit) {
+    return firstAlphaInfo.number;
+  }
+  return firstNumberDigit;
+}
+
+function getLastNumber(text: string) {
+  const lastNumberDigit = getLastDigit(text);
+  const lastAlphaInfo = getLastAlphabeticalNumberInfo(text);
+
+  const indexOflastNumberDigit = text.lastIndexOf(`${lastNumberDigit}`);
+
+  if (lastAlphaInfo.index > indexOflastNumberDigit) {
+    return lastAlphaInfo.number;
+  }
+  return lastNumberDigit;
 }
 
 function getFirstDigit(text: string) {
@@ -1065,31 +1118,44 @@ function tests() {
   //   console.log(l);
 }
 
-let totalSum = 0;
-splitLines.forEach((line) => {
-  console.log(line);
-  const firstDigit = getFirstDigit(line);
-  console.log("firstDigit", firstDigit);
-  const lastDigit = getLastDigit(line);
-  console.log("lastDigit", lastDigit);
+function part1() {
+  let totalSum = 0;
+  splitLines.forEach((line) => {
+    console.log(line);
+    const firstDigit = getFirstDigit(line);
+    console.log("firstDigit", firstDigit);
+    const lastDigit = getLastDigit(line);
+    console.log("lastDigit", lastDigit);
 
-  const combined = `${firstDigit!}${lastDigit}`;
-  console.log("combined", combined);
+    const combined = `${firstDigit!}${lastDigit}`;
+    console.log("combined", combined);
 
-  const combineInt = parseInt(combined);
-  totalSum += combineInt;
-  console.log("totalSum", totalSum);
-  console.log("================");
-});
-
-function isNumeric(str: string) {
-  const numeric = parseInt(str, 10);
-
-  if (isNaN(numeric)) {
-    return false;
-  } else {
-    return true;
-  }
+    const combineInt = parseInt(combined);
+    totalSum += combineInt;
+    console.log("totalSum", totalSum);
+    console.log("================");
+  });
 }
+
+function part2() {
+  let totalSum = 0;
+  splitLines.forEach((line) => {
+    console.log(line);
+    const firstDigit = getFirstNumber(line);
+    console.log("firstDigit", firstDigit);
+    const lastDigit = getLastNumber(line);
+    console.log("lastDigit", lastDigit);
+
+    const combined = `${firstDigit!}${lastDigit}`;
+    console.log("combined", combined);
+
+    const combineInt = parseInt(combined);
+    totalSum += combineInt;
+    console.log("totalSum", totalSum);
+    console.log("================");
+  });
+}
+
+part2();
 
 // tests();

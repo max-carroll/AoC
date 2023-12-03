@@ -72,19 +72,26 @@ function assertHasCoordinates(
  *    5,4  (5,5) (5,6) (5,7) 5,8
  *    6,4   6,5   6,6   6,7  6,8
  */
-// test("should get adjacent coords, if a number has a larger length than 1", () => {
-//   const adjacentCoords = getAdjacentCoords(5, 5, 3);
-//   assert.deepStrictEqual(adjacentCoords, [
-//     [4, 4],
-//     [4, 5],
-//     [4, 6],
-//     [5, 4],
-//     [5, 6],
-//     [6, 4],
-//     [6, 5],
-//     [6, 6],
-//   ]);
-// });
+test("should get adjacent coords, if a number has a larger length than 1", () => {
+  const adjacentCoords = getAdjacentCoords(5, 5, 3);
+
+  assertHasCoordinates(adjacentCoords, [4, 4]);
+  assertHasCoordinates(adjacentCoords, [4, 5]);
+  assertHasCoordinates(adjacentCoords, [4, 6]);
+  assertHasCoordinates(adjacentCoords, [4, 7]);
+  assertHasCoordinates(adjacentCoords, [4, 8]);
+
+  assertHasCoordinates(adjacentCoords, [5, 4]);
+  assertHasCoordinates(adjacentCoords, [5, 8]);
+
+  assertHasCoordinates(adjacentCoords, [6, 4]);
+  assertHasCoordinates(adjacentCoords, [6, 5]);
+  assertHasCoordinates(adjacentCoords, [6, 6]);
+  assertHasCoordinates(adjacentCoords, [6, 7]);
+  assertHasCoordinates(adjacentCoords, [6, 8]);
+
+  assert.equal(adjacentCoords.length, 12);
+});
 
 // test("thingy", () => {
 //   const matches =

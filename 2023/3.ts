@@ -164,25 +164,38 @@ export function getAdjacentCoords(
   stringIndex: number,
   numberLength: number = 1
 ): Array<[number, number]> {
-  const set = new Set<[number, number]>();
+  let array: Array<[number, number]> = [];
 
   for (
     var stringIndexAdjustment = -1;
     stringIndexAdjustment <= -1 + numberLength + 1;
     stringIndexAdjustment++
   ) {
-    set.add([lineIndex - 1, stringIndex + stringIndexAdjustment]);
-    set.add([lineIndex, stringIndex + stringIndexAdjustment]);
-    set.add([lineIndex + 1, stringIndex + stringIndexAdjustment]);
+    array.push([lineIndex - 1, stringIndex + stringIndexAdjustment]);
+    array.push([lineIndex, stringIndex + stringIndexAdjustment]);
+    array.push([lineIndex + 1, stringIndex + stringIndexAdjustment]);
   }
 
-  set.delete([lineIndex, stringIndex]);
+  //   let result = Array.from(array);
 
-  let result = Array.from(set);
+  //   for ()
 
-  result = result.filter(([x, y]) => x !== lineIndex || y !== stringIndex);
+  // delete entries that are part of the number
+  // for (
+  //     var currentIndex = stringIndex;
+  //     currentIndex <= stringIndex + numberLength;
+  //     currentIndex++
+  //   ) {
+  //     array = array.filter(([li, si]) => li !== lineIndex || si !== currentIndex);
+  //   }
 
-  return result;
+  for (var i = 1; i <= +numberLength; i++) {
+    array = array.filter(
+      ([x, y]) => x !== lineIndex || y !== stringIndex - 1 + i
+    );
+  }
+
+  return array;
 
   //   return [
   //     [lineIndex - 1, stringIndex - 1],

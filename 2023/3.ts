@@ -158,3 +158,49 @@ export function LinesToMatrix(lines: Array<string>): Array<Array<string>> {
 export function createMatrixRow(s: string) {
   return s.split("");
 }
+
+export function getAdjacentCoords(
+  lineIndex: number,
+  stringIndex: number,
+  numberLength: number = 1
+): Array<[number, number]> {
+  const set = new Set<[number, number]>();
+
+  for (
+    var stringIndexAdjustment = -1;
+    stringIndexAdjustment <= -1 + numberLength + 1;
+    stringIndexAdjustment++
+  ) {
+    set.add([lineIndex - 1, stringIndex + stringIndexAdjustment]);
+    set.add([lineIndex, stringIndex + stringIndexAdjustment]);
+    set.add([lineIndex + 1, stringIndex + stringIndexAdjustment]);
+  }
+
+  set.delete([lineIndex, stringIndex]);
+
+  let result = Array.from(set);
+
+  result = result.filter(([x, y]) => x !== lineIndex || y !== stringIndex);
+
+  return result;
+
+  //   return [
+  //     [lineIndex - 1, stringIndex - 1],
+  //     [lineIndex - 1, stringIndex],
+  //     [lineIndex - 1, stringIndex + 1],
+  //     [lineIndex, stringIndex - 1],
+  //     [lineIndex, stringIndex + 1],
+  //     [lineIndex + 1, stringIndex - 1],
+  //     [lineIndex + 1, stringIndex],
+  //     [lineIndex + 1, stringIndex + 1],
+  //   ];
+}
+
+const matches =
+  ".........................3.......................................94...............806....................596.........793...........186......".matchAll(
+    /\d+/g
+  );
+
+for (var match of matches) {
+  console.log(match);
+}

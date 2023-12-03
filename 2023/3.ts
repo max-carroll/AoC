@@ -193,13 +193,66 @@ export function getAdjacentCoords(
   return array;
 }
 
-// const getPar;
+function GetPartNumbersFromLine(
+  matrix: Array<Array<string>>,
+  lineNumber: number
+): Array<number> {
+  // const matches =
+  //   ".........................3.......................................94...............806....................596.........793...........186......".matchAll(
+  //     /\d+/g
+  //   );
 
-const matches =
-  ".........................3.......................................94...............806....................596.........793...........186......".matchAll(
-    /\d+/g
-  );
+  const line = matrix[lineNumber];
+  const partNumbers: Array<number> = [];
 
-for (var match of matches) {
-  console.log(match);
+  const matches = line.join().matchAll(/\d+/g);
+
+  for (var match of matches) {
+    console.log(match);
+
+    if (match.index) {
+      const posssiblePartNumber = match[0];
+      const adjacentCoords = getAdjacentCoords(
+        lineNumber,
+        match.index,
+        posssiblePartNumber.length
+      );
+
+      const theresSomeAdjacentSymbols = adjacentCoords.some(([li, si]) =>
+        MatrixContainsSymbolAt(matrix, [li, si])
+      );
+      if (theresSomeAdjacentSymbols) {
+        const partNumberAsInt = parseInt(posssiblePartNumber, 10);
+        partNumbers.push(partNumberAsInt);
+      }
+    }
+  }
+  return partNumbers;
+}
+
+export function MatrixContainsSymbolAt(
+  matrix: Array<Array<string>>,
+  coords: [number, number]
+) {
+  const [lineIndex, stringIndex] = coords;
+
+  if (matrix[lineIndex] && matrix[lineIndex][stringIndex]) {
+    const character = matrix[lineIndex][stringIndex];
+    // If its not a dot or a number, then it must be a symbol
+    const justADotOrNumber = !character.match(/[\d.]/);
+    return !justADotOrNumber;
+  }
+}
+
+export function GetPartNumbers(matrix: Array<Array<string>>): Array<number> {
+  let partNumbers: Array<number> = [];
+
+  matrix.forEach((line, lineNumber) => {
+    const partNumbersForThisLine = GetPartNumbersFromLine(matrix, lineNumber);
+
+    console.log(partNumbersForThisLine);
+    partNumbers = partNumbers.concat(partNumbersForThisLine);
+  });
+
+  return partNumbers;
 }

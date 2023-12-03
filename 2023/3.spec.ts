@@ -1,6 +1,12 @@
 import assert from "assert";
 import test from "node:test";
-import { LinesToMatrix, getAdjacentCoords, getSplit, rawInput } from "./3";
+import {
+  GetPartNumbers,
+  LinesToMatrix,
+  getAdjacentCoords,
+  getSplit,
+  rawInput,
+} from "./3";
 
 test("should return right number of lines when splitting", () => {
   const result = getSplit(rawInput);
@@ -108,6 +114,8 @@ test("adjacent coords cant be less than 0", () => {
   assert.equal(adjacentCoords.length, 3);
 });
 
+// const get
+
 // test("thingy", () => {
 //   const matches =
 //     ".........................3.......................................94...............806....................596.........793...........186......".matchAll(
@@ -118,3 +126,22 @@ test("adjacent coords cant be less than 0", () => {
 //     console.log(matches);
 //   }
 // });
+test("small example", () => {
+  const testInput = `467..114..
+  ...*......
+  ..35..633.
+  ......#...
+  617*......
+  .....+.58.
+  ..592.....
+  ......755.
+  ...$.*....
+  .664.598..`;
+
+  const split = getSplit(testInput);
+  const matrix = LinesToMatrix(split);
+
+  const partNumbers = GetPartNumbers(matrix);
+
+  assert(partNumbers[0] === 467);
+});

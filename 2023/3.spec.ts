@@ -219,6 +219,9 @@ test("get part numbers around stars", () => {
   const first = getPartNumbersAdjacentTo(matrix, 1, 3);
   assert.deepStrictEqual(first, [467, 35]);
 
+  const middle = getPartNumbersAdjacentTo(matrix, 4, 3);
+  assert.deepStrictEqual(middle, [617]);
+
   const last = getPartNumbersAdjacentTo(matrix, 8, 5);
   assert.deepStrictEqual(last, [755, 598]);
 });

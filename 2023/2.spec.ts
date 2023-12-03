@@ -1,7 +1,8 @@
+import assert from "assert";
+import test from "node:test";
 import { Game, IsGamePossibleWIthThese } from "./2";
 
-describe("test", () => {
-  it("should not be possible if too many greens", () => {});
+test("should not be possible if too many greens", () => {
   const game: Game = {
     id: 3,
     subsets: [
@@ -12,5 +13,5 @@ describe("test", () => {
   };
 
   const possible = IsGamePossibleWIthThese(game, 12, 13, 14);
-  expect(possible).toBe(false);
+  assert.equal(possible, false);
 });

@@ -194,3 +194,5 @@ games.forEach((game) => {
 
   console.log(game, "isPossible:", isPossible);
 });
+
+console.log("sum", sumOfIds);

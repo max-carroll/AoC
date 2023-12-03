@@ -21,4 +21,6 @@ test("should create  a matrix from lines", () => {
   const matrix = LinesToMatrix(result);
 
   assert.equal(matrix.length, 140);
+
+  assert.equal(matrix[0][0], ".");
 });

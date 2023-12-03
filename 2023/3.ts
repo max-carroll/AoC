@@ -147,7 +147,7 @@ export function getSplit(rawInput: string): Array<string> {
 export function LinesToMatrix(lines: Array<string>): Array<Array<string>> {
   const matrix: Array<Array<string>> = [];
 
-  for (var line in lines) {
+  for (var line of lines) {
     const row = line.split("");
     matrix.push(row);
   }

@@ -183,6 +183,7 @@ export function IsGamePossibleWIthThese(
 }
 
 let sumOfIds = 0;
+let sumOfPowers = 0;
 
 games.forEach((game) => {
   const isPossible = IsGamePossibleWIthThese(game, 12, 13, 14);
@@ -192,10 +193,15 @@ games.forEach((game) => {
     // console.log({ game, isPossible });
   }
 
+  const minCubesRequired = GetMinimumCubesRequiredForGame(game);
+  const power = GetPowerOfCubes(minCubesRequired);
+  sumOfPowers += power;
+
   console.log(game, "isPossible:", isPossible);
 });
 
 console.log("sum", sumOfIds);
+console.log("sumOfPower", sumOfPowers);
 
 export function GetMinimumCubesRequiredForGame(game: Game): CubeInfo {
   let maxBlue = 0;

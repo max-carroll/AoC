@@ -201,12 +201,9 @@ function GetPartNumbersFromLine(
   const partNumbers: Array<number> = [];
 
   const joined = line.join("");
-  console.log("joined", joined);
   const matches = joined.matchAll(/\d+/g);
 
   for (var match of matches) {
-    console.log(match);
-
     if (match.index !== undefined) {
       const posssiblePartNumber = match[0];
       const adjacentCoords = getAdjacentCoords(
@@ -251,7 +248,6 @@ export function GetPartNumbers(matrix: Array<Array<string>>): Array<number> {
   matrix.forEach((line, lineNumber) => {
     const partNumbersForThisLine = GetPartNumbersFromLine(matrix, lineNumber);
 
-    console.log(partNumbersForThisLine);
     partNumbers = partNumbers.concat(partNumbersForThisLine);
   });
 

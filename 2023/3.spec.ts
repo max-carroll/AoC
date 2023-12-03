@@ -5,6 +5,7 @@ import {
   IsASymbol,
   LinesToMatrix,
   getAdjacentCoords,
+  getPartNumbersAdjacentTo,
   getSplit,
   rawInput,
 } from "./3";
@@ -198,4 +199,25 @@ test("should return coordinates adjacent to number - failing example 1", () => {
 test("is not a symbol .", () => {
   const result = IsASymbol(".");
   assert(result === false);
+});
+
+test("get part numbers around stars", () => {
+  const testInput = `467..114..
+...*......
+..35..633.
+......#...
+617*......
+.....+.58.
+..592.....
+......755.
+...$.*....
+.664.598..`;
+  const split = getSplit(testInput);
+  const matrix = LinesToMatrix(split);
+
+  // const first = getPartNumbersAdjacentTo(matrix, 1, 3);
+  // assert.deepStrictEqual(first, [467,35]);
+
+  const last = getPartNumbersAdjacentTo(matrix, 8, 5);
+  assert.deepStrictEqual(last, [755, 598]);
 });

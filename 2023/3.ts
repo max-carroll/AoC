@@ -1,3 +1,5 @@
+import { SumArray } from "../utils";
+
 export const rawInput = `.........................3.......................................94...............806....................596.........793...........186......
 .../..........*574.587..*........161......904.......412.........*.................*.................................=.....637.%......*......
 ..614..831..33.....*...........@....*398..&.....690*............183.........503..916..790................................*.....256....632...
@@ -257,4 +259,121 @@ export function GetPartNumbers(matrix: Array<Array<string>>): Array<number> {
 export function IsASymbol(s: string): boolean {
   const justADotOrNumber = s.match(/[\d.]/);
   return !justADotOrNumber;
+}
+
+function part1() {
+  const lines = getSplit(rawInput);
+  const matrix = LinesToMatrix(lines);
+  const partNumbers = GetPartNumbers(matrix);
+  const totalSum = SumArray(partNumbers);
+
+  console.log("totalSum", totalSum);
+
+  // first answer 550064 - boom correct
+}
+
+part1();
+
+export function getPartNumbersAdjacentTo(
+  matrix: Array<Array<string>>,
+  lineOfStar: number,
+  stringIndexOfStar: number
+): Array<number> {
+  let adjacentPartNumbers: Array<number> = [];
+
+  // seek above the star
+  if (lineOfStar > 0) {
+    const lineOfInterest = matrix[lineOfStar - 1];
+    const parts = GetNumberPartsFromLineOfInterest(
+      lineOfInterest,
+      stringIndexOfStar
+    );
+
+    if (parts.length) {
+      adjacentPartNumbers = adjacentPartNumbers.concat(parts);
+    }
+  }
+
+  // Same line as the start
+  const lineOfInterest = matrix[lineOfStar];
+  const parts = GetNumberPartsFromLineOfInterest(
+    lineOfInterest,
+    stringIndexOfStar
+  );
+
+  if (parts.length) {
+    adjacentPartNumbers = adjacentPartNumbers.concat(parts);
+  }
+
+  if (lineOfStar < matrix.length) {
+    const lineOfInterest = matrix[lineOfStar + 1];
+    const parts = GetNumberPartsFromLineOfInterest(
+      lineOfInterest,
+      stringIndexOfStar
+    );
+
+    if (parts.length) {
+      adjacentPartNumbers = adjacentPartNumbers.concat(parts);
+    }
+  }
+
+  return adjacentPartNumbers;
+}
+
+// const TRY = `
+
+// 123-456
+//    *
+
+// `
+
+function GetNumberPartsFromLineOfInterest(
+  lineOfInterest: string[],
+  stringIndexOfStar: number
+): Array<number> {
+  const adjacentPartNumbers: Array<number> = [];
+  let adjacentReleveant = [lineOfInterest[stringIndexOfStar]];
+
+  // look behind and put them at the start iftheyre digits
+  let currentIndex = stringIndexOfStar - 1;
+  let iterations = 1;
+  while (currentIndex >= 0 && lineOfInterest[currentIndex] && iterations <= 3) {
+    if (lineOfInterest[currentIndex].match(/\d/)) {
+      const currentDigitItem = lineOfInterest[currentIndex];
+      adjacentReleveant.unshift(currentDigitItem);
+      iterations++;
+      currentIndex--;
+    } else {
+      break; // no more digits
+    }
+  }
+
+  // look ahead and put digits on end
+  currentIndex = stringIndexOfStar - 1;
+  iterations = 1;
+  while (
+    currentIndex >= lineOfInterest.length &&
+    lineOfInterest[currentIndex] &&
+    iterations <= 3
+  ) {
+    if (lineOfInterest[currentIndex].match(/\d/)) {
+      const currentDigitItem = lineOfInterest[currentIndex];
+      adjacentReleveant.push(currentDigitItem);
+      iterations++;
+      currentIndex--;
+    } else {
+      break; // no more digits
+    }
+  }
+
+  const finalRelevantString = adjacentReleveant.join("");
+
+  const matches = finalRelevantString.matchAll(/\d/);
+
+  for (var match of matches) {
+    if (match && match[0]) {
+      adjacentPartNumbers.push(parseInt(match[0], 10));
+    }
+  }
+  return adjacentPartNumbers;
 }

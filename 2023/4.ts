@@ -1,3 +1,5 @@
+import { SumArray } from "../utils";
+
 const rawInput = `Card   1:  9 32  7 82 10 36 31 12 85 95 |  7 69 23  9 32 22 47 10 95 14 24 71 57 12 31 59 36 68  2 82 38 80 85 21 92
 Card   2: 16 35 95 22 59 82 76 60 19 88 | 63 91 16 35 26 82 95 51 53 60 94 59 56 73 28 76 12 44 22 62  8  7 19 38 88
 Card   3:  1 88 48 52 70 19 11 78 94 28 | 19 92 70 18 34 78 83  8 82 87  3 97 66 31 63 17 69  4 75 94 52 54 77 24 45
@@ -303,3 +305,15 @@ export function GetNumberOfCardCopies(gameData: string): Map<number, number> {
 
   return copiesOfEachCard;
 }
+
+function part2() {
+  const nunmberOfCardCopies = GetNumberOfCardCopies(rawInput);
+
+  const array = Array.from(nunmberOfCardCopies, ([name, value]) => value);
+
+  const totalNumberOfScratchCards = SumArray(array);
+
+  console.log({ totalNumberOfScratchCards }); // 14427616
+}
+
+part2();

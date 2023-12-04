@@ -273,7 +273,7 @@ export function GetWinningNumbersFromCard(line: string): number[] {
 export function GetNumberOfCardCopies(gameData: string): Map<number, number> {
   const copiesOfEachCard = new Map<number, number>();
 
-  const lines = gameData.split("/n");
+  const lines = gameData.split("\n");
 
   lines.forEach((line, index) => {
     const currentCardNumber = index + 1; // due to being zero based
@@ -281,10 +281,11 @@ export function GetNumberOfCardCopies(gameData: string): Map<number, number> {
 
     // increment it by one anyway as a means to include the original card
 
-    let currentNumberOfCards = copiesOfEachCard.get(currentCardNumber) ?? 0;
-    currentNumberOfCards++;
+    let currentNumberOfTheCurrentCard =
+      copiesOfEachCard.get(currentCardNumber) ?? 0;
+    currentNumberOfTheCurrentCard++;
 
-    copiesOfEachCard.set(currentCardNumber, currentCardNumber);
+    copiesOfEachCard.set(currentCardNumber, currentNumberOfTheCurrentCard);
     const scoreFromThisCard = winningNumbersFromCard.length;
 
     if (scoreFromThisCard) {
@@ -292,10 +293,10 @@ export function GetNumberOfCardCopies(gameData: string): Map<number, number> {
       for (let i = 1; i <= scoreFromThisCard; i++) {
         const nextCardIndex = currentCardNumber + i;
 
-        let numberOfCoppies = copiesOfEachCard.get(nextCardIndex) ?? 0;
-        numberOfCoppies++;
+        let numberOfCopies = copiesOfEachCard.get(nextCardIndex) ?? 0;
+        numberOfCopies = 1 * currentNumberOfTheCurrentCard; // we need to increment it by 1 for every copy of trhe current Card We have
 
-        copiesOfEachCard.set(nextCardIndex, numberOfCoppies);
+        copiesOfEachCard.set(nextCardIndex, numberOfCopies);
       }
     }
   });

@@ -55,4 +55,7 @@ Card 6: 31 18 13 56 72 | 74 77 10 23 35 67 36 11`;
   assert.equal(map.get(1), 1); // 1 instance of card 1
   assert.equal(map.get(2), 2); // 2 instances of card 2
   assert.equal(map.get(3), 4); // 4 instances of card 3 [the original, copy won from 1, 2 copies won from 2]
+  assert.equal(map.get(4), 8); // 8 instances of card 4
+  assert.equal(map.get(5), 14); // 14 instances of card 5
+  assert.equal(map.get(6), 1); // 14 instances of card 5
 });

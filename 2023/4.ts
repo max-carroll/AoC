@@ -268,3 +268,37 @@ export function GetWinningNumbersFromCard(line: string): number[] {
 
   return matches;
 }
+
+// PART2
+export function GetNumberOfCardCopies(gameData: string): Map<number, number> {
+  const copiesOfEachCard = new Map<number, number>();
+
+  const lines = gameData.split("/n");
+
+  lines.forEach((line, index) => {
+    const currentCardNumber = index + 1; // due to being zero based
+    const winningNumbersFromCard = GetWinningNumbersFromCard(line);
+
+    // increment it by one anyway as a means to include the original card
+
+    let currentNumberOfCards = copiesOfEachCard.get(currentCardNumber) ?? 0;
+    currentNumberOfCards++;
+
+    copiesOfEachCard.set(currentCardNumber, currentCardNumber);
+    const scoreFromThisCard = winningNumbersFromCard.length;
+
+    if (scoreFromThisCard) {
+      // iterate through and increment the copies in the map
+      for (let i = 1; i <= scoreFromThisCard; i++) {
+        const nextCardIndex = currentCardNumber + i;
+
+        let numberOfCoppies = copiesOfEachCard.get(nextCardIndex) ?? 0;
+        numberOfCoppies++;
+
+        copiesOfEachCard.set(nextCardIndex, numberOfCoppies);
+      }
+    }
+  });
+
+  return copiesOfEachCard;
+}

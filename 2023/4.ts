@@ -294,7 +294,7 @@ export function GetNumberOfCardCopies(gameData: string): Map<number, number> {
         const nextCardIndex = currentCardNumber + i;
 
         let numberOfCopies = copiesOfEachCard.get(nextCardIndex) ?? 0;
-        numberOfCopies = 1 * currentNumberOfTheCurrentCard; // we need to increment it by 1 for every copy of trhe current Card We have
+        numberOfCopies += 1 * currentNumberOfTheCurrentCard; // we need to increment it by 1 for every copy of trhe current Card We have
 
         copiesOfEachCard.set(nextCardIndex, numberOfCopies);
       }

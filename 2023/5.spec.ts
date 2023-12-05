@@ -189,16 +189,30 @@ function GetMappingJourneyForSeed(
     mappings["fertilizer-to-water"],
     fertilizer
   );
+  const light = GetDestinationUsingMap(mappings["water-to-light"], water);
+  const temperature = GetDestinationUsingMap(
+    mappings["light-to-temperature"],
+    light
+  );
+  const humidity = GetDestinationUsingMap(
+    mappings["temperature-to-humidity"],
+    temperature
+  );
+
+  const location = GetDestinationUsingMap(
+    mappings["humidity-to-location"],
+    humidity
+  );
 
   const mappingJourney: MappingJourney = {
     seed,
     soil,
     fertilizer,
     water,
-    light: 0,
-    temperature: 0,
-    humidity: 0,
-    location: 0,
+    light,
+    temperature,
+    humidity,
+    location,
   };
 
   return mappingJourney;
@@ -212,4 +226,8 @@ test("should get correct information from seed example 1", () => {
   assert.equal(mappingJourney.soil, 81);
   assert.equal(mappingJourney.fertilizer, 81);
   assert.equal(mappingJourney.water, 81);
+  assert.equal(mappingJourney.light, 74);
+  assert.equal(mappingJourney.temperature, 78);
+  assert.equal(mappingJourney.humidity, 78);
+  assert.equal(mappingJourney.location, 82);
 });

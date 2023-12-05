@@ -152,3 +152,18 @@ export function GetMappingJourneyForSeed(
 
   return mappingJourney;
 }
+
+export function getLowestLocationForSeedMappings(gameData: GameData): number {
+  let lowestSoFar: number | undefined;
+  for (let seed of gameData.seeds) {
+    const journey = GetMappingJourneyForSeed(seed, gameData.mappings);
+
+    const { location } = journey;
+
+    if (lowestSoFar === undefined || location < lowestSoFar) {
+      lowestSoFar = location; // set the first time
+    }
+  }
+
+  return lowestSoFar ?? 0;
+}

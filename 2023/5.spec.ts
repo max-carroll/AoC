@@ -6,6 +6,7 @@ import {
   GetMappingJourneyForSeed,
   Mapping,
   ParseRawStringIntoMappingObjects,
+  getLowestLocationForSeedMappings,
 } from "./5";
 
 test("should parse Game Data with correct seeds", () => {
@@ -96,4 +97,12 @@ test("should get correct information from seed example 2", () => {
   assert.equal(mappingJourney.temperature, 42);
   assert.equal(mappingJourney.humidity, 43);
   assert.equal(mappingJourney.location, 43);
+});
+
+test("the minimum location should be 35", () => {
+  const gameData = ParseRawStringIntoMappingObjects(testDataRawString);
+
+  const lowestLocation = getLowestLocationForSeedMappings(gameData);
+
+  assert.equal(lowestLocation, 35); // according to example in the site
 });

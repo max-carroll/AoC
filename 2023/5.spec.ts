@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import test from "node:test";
-import { testDataRawString } from "./5.rawdata";
+import { realInputRawString, testDataRawString } from "./5.rawdata";
 import {
   GetDestination,
   GetMappingJourneyForSeed,
@@ -105,4 +105,12 @@ test("the minimum location should be 35", () => {
   const lowestLocation = getLowestLocationForSeedMappings(gameData);
 
   assert.equal(lowestLocation, 35); // according to example in the site
+});
+
+test("Answer to Part 1:lowest location using real data", () => {
+  const gameData = ParseRawStringIntoMappingObjects(realInputRawString);
+
+  const lowestLocation = getLowestLocationForSeedMappings(gameData);
+
+  assert.equal(lowestLocation, 282277027); // Answer to part 1
 });

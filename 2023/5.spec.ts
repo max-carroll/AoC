@@ -231,3 +231,17 @@ test("should get correct information from seed example 1", () => {
   assert.equal(mappingJourney.humidity, 78);
   assert.equal(mappingJourney.location, 82);
 });
+
+test("should get correct information from seed example 2", () => {
+  const gameData = ParseRawStringIntoMappingObjects(testDataRawString);
+
+  const mappingJourney = GetMappingJourneyForSeed(14, gameData.mappings);
+
+  assert.equal(mappingJourney.soil, 14);
+  assert.equal(mappingJourney.fertilizer, 53);
+  assert.equal(mappingJourney.water, 49);
+  assert.equal(mappingJourney.light, 42);
+  assert.equal(mappingJourney.temperature, 42);
+  assert.equal(mappingJourney.humidity, 43);
+  assert.equal(mappingJourney.location, 43);
+});

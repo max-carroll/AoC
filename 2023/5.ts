@@ -1,3 +1,5 @@
+import { realInputRawString } from "./5.rawdata";
+
 export type MappingType =
   | "seed-to-soil"
   | "soil-to-fertilizer"
@@ -16,7 +18,7 @@ export function ParseRawStringIntoMappingObjects(rawString: string): GameData {
   const sections = rawString.split("\n\n");
 
   const justDigits = sections[0].match(/[\d\s]+/)?.[0].trim() ?? "";
-  console.log(justDigits);
+
   const seeds = justDigits.split(" ").map((x) => parseInt(x, 10));
 
   const gameData: GameData = {
@@ -167,3 +169,53 @@ export function getLowestLocationForSeedMappings(gameData: GameData): number {
 
   return lowestSoFar ?? 0;
 }
+
+export function getNewUpdatedSeedNumbers(numbers: number[]): number[] {
+  let result: number[] = [];
+  for (let i = 0; i <= numbers.length - 2; i += 2) {
+    const start = numbers[i];
+    const range = numbers[i + 1];
+
+    for (var j = start; j < start + range; j++) {
+      result.push(j);
+    }
+  }
+  return result;
+}
+
+function part2() {
+  const gameData = ParseRawStringIntoMappingObjects(realInputRawString);
+
+  // overwrite the seeds with new seeds
+
+  // 11554135
+  let lowestLocation: number | undefined = undefined;
+
+  let result: number[] = [];
+  for (let i = 0; i <= gameData.seeds.length - 2; i += 2) {
+    const start = gameData.seeds[i];
+    const range = gameData.seeds[i + 1];
+
+    for (
+      var currentSeedNumber = start;
+      currentSeedNumber < start + range;
+      currentSeedNumber++
+    ) {
+      const seedJourney = GetMappingJourneyForSeed(
+        currentSeedNumber,
+        gameData.mappings
+      );
+
+      if (
+        lowestLocation === undefined ||
+        seedJourney.location < lowestLocation
+      ) {
+        lowestLocation = seedJourney.location;
+        console.log("new lowest location", lowestLocation);
+      }
+    }
+  }
+  console.log("finalLowestLocation", lowestLocation);
+}
+
+part2();

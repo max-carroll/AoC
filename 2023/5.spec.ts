@@ -7,6 +7,7 @@ import {
   Mapping,
   ParseRawStringIntoMappingObjects,
   getLowestLocationForSeedMappings,
+  getNewUpdatedSeedNumbers,
 } from "./5";
 
 test("should parse Game Data with correct seeds", () => {
@@ -114,3 +115,29 @@ test("Answer to Part 1:lowest location using real data", () => {
 
   assert.equal(lowestLocation, 282277027); // Answer to part 1
 });
+
+//PART2
+test("create list of updated seeds", () => {
+  const originalSeedNumbers = [79, 14, 55, 13];
+
+  const newUpdatedSeedNumbers = getNewUpdatedSeedNumbers(originalSeedNumbers);
+
+  assert.deepEqual(
+    newUpdatedSeedNumbers,
+    [
+      79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 55, 56, 57, 58,
+      59, 60, 61, 62, 63, 64, 65, 66, 67,
+    ]
+  );
+});
+
+// test("Answer to Part 2:lowest location using real data", () => {
+//   const gameData = ParseRawStringIntoMappingObjects(realInputRawString);
+
+//   // overwrite the seeds with new seeds
+//   gameData.seeds = getNewUpdatedSeedNumbers(gameData.seeds);
+
+//   const lowestLocation = getLowestLocationForSeedMappings(gameData);
+
+//   assert.equal(lowestLocation, 282277027); // Answer to part 1
+// });

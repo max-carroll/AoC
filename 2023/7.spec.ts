@@ -53,3 +53,13 @@ test("should determine a 2 pair ", () => {
     );
   });
 });
+
+test("should determine a pair ", () => {
+  ["AA624", "A1464", "A123A"].forEach((handString) => {
+    assert.equal(
+      getHandInfo(handString),
+      Hand.onePair,
+      `${handString} should be onePair`
+    );
+  });
+});

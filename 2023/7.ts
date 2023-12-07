@@ -55,5 +55,9 @@ export function getHandInfo(hand: string): Hand {
     return Hand.twoPair;
   }
 
+  if (numberOfPairs === 1) {
+    return Hand.onePair;
+  }
+
   return resultingHand;
 }

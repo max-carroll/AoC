@@ -45,6 +45,7 @@ export function getHandInfo(hand: string, jsAreWild = false): Hand {
         if (!jsAreWild) {
           return resultingHand;
         }
+        break;
       case 5:
         resultingHand = Hand.fiveOfAKind;
         return resultingHand;
@@ -53,7 +54,11 @@ export function getHandInfo(hand: string, jsAreWild = false): Hand {
 
   const numberOfJs = hand.split("").filter((c) => c === "J").length;
   if (jsAreWild && numberOfJs > 0) {
-    let handRank = getHandInfo(hand, false);
+    const removeTheJs = hand
+      .split("")
+      .filter((c) => c !== "J")
+      .join("");
+    let handRank = getHandInfo(removeTheJs, false);
 
     // increment by the number of Js
     for (let i = 1; i <= numberOfJs; i++) {
@@ -233,12 +238,14 @@ function part2() {
     result: Hand[getHandInfo(h.hand, true)],
   }));
 
-  console.table(handInfosWithEvenMoreInfo);
+  // console.table(handInfosWithEvenMoreInfo);
 
   const allTheWInnings = SumArray(winnings);
   console.log("all winnings part 2", allTheWInnings); // 255181856 (too low - wrong)
   // snd try 255501454 (wrong)
   // 3rd try 255374738
+  // 4th try 255398310 (wrong)
+  // 5th try 255632664
 }
 
 part2();

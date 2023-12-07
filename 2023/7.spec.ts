@@ -186,6 +186,18 @@ test("Js are wild : should determine a 3 of a kind - edge case", () => {
   );
 });
 
+// 22822
+
+test("Js are wild : should determine a 4 of a kind - edge case", () => {
+  const hand = "22822";
+  const result = getHandInfo(hand, true);
+  assert.equal(
+    result,
+    Hand.fourOfAKind,
+    `${hand} should be fourOfAKind but was ${Hand[result]}`
+  );
+});
+
 test("Js are wild : should determine a 3 of a kind", () => {
   ["KKJ23", "QJQ53", "633TJ", "39J35"].forEach((handString) => {
     const result = getHandInfo(handString, true);

@@ -2,6 +2,7 @@ import assert from "node:assert";
 import test from "node:test";
 import {
   Hand,
+  HandInfo,
   getHandInfo,
   getRanksAndWInningInfo,
   getRanksHands,
@@ -158,4 +159,100 @@ test("should determine a letter ", () => {
   });
 
   assert.deepEqual(numbers, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+});
+
+// par2 Js are wild
+
+test("Js are wild : should determine a pair", () => {
+  ["TJ584", "7TJK2", "6J234"].forEach((handString) => {
+    const result = getHandInfo(handString, true);
+    assert.equal(
+      result,
+      Hand.onePair,
+      `${handString} should be pair but was ${result}`
+    );
+  });
+});
+
+// 49JJJ
+
+test("Js are wild : should determine a 3 of a kind - edge case", () => {
+  const hand = "49JJJ";
+  const result = getHandInfo(hand, true);
+  assert.equal(
+    result,
+    Hand.fourOfAKind,
+    `${hand} should be fourOfAKind but was ${Hand[result]}`
+  );
+});
+
+test("Js are wild : should determine a 3 of a kind", () => {
+  ["KKJ23", "QJQ53", "633TJ", "39J35"].forEach((handString) => {
+    const result = getHandInfo(handString, true);
+    assert.equal(
+      result,
+      Hand.threeOfAKind,
+      `${handString} should be 3OfAKind but was ${result}`
+    );
+  });
+});
+
+test("Js are wild : should determine a full house", () => {
+  ["AJ66A", "AJ66A", "9J449"].forEach((handString) => {
+    const result = getHandInfo(handString, true);
+    assert.equal(
+      result,
+      Hand.fullHouse,
+      `${handString} should be fullHouse but was ${result}`
+    );
+  });
+});
+
+test("Js are wild : should determine a 4 of a kind", () => {
+  ["KTJJT", "555J7", "6AJJA", "T3TTJ"].forEach((handString) => {
+    const result = getHandInfo(handString, true);
+    assert.equal(
+      result,
+      Hand.fourOfAKind,
+      `${handString} should be fourOfAKind but was ${result}`
+    );
+  });
+});
+
+test("Js are wild : should determine a 5 of a kind", () => {
+  ["J5JJ5", "J4444"].forEach((handString) => {
+    const result = getHandInfo(handString, true);
+    assert.equal(
+      result,
+      Hand.fiveOfAKind,
+      `${handString} should be five of a kind but was ${result}`
+    );
+  });
+});
+
+test("part2 Test with their test data", () => {
+  const sample = `32T3K 765
+T55J5 684
+KK677 28
+KTJJT 220
+QQQJA 483`;
+
+  const lines = sample.split("\n");
+
+  const handInfos = lines.map((l) => {
+    const [hand, bid] = l.split(" ");
+
+    const handInfo: HandInfo = { hand, bid: parseInt(bid, 10) };
+    return handInfo;
+  });
+
+  const result = getRanksAndWInningInfo(handInfos, true);
+
+  assert.deepEqual(result, [
+    { hand: "32T3K", bid: 765, rank: 1, winnings: 765 },
+    { hand: "KK677", bid: 28, rank: 2, winnings: 28 * 2 },
+    { hand: "T55J5", bid: 684, rank: 3, winnings: 684 * 3 },
+    { hand: "QQQJA", bid: 483, rank: 4, winnings: 483 * 4 },
+    { hand: "KTJJT", bid: 220, rank: 5, winnings: 220 * 5 },
+  ]);
 });

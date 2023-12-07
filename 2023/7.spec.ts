@@ -1,6 +1,12 @@
 import assert from "node:assert";
 import test from "node:test";
-import { Hand, getHandInfo, getRanksHands, letterToNumber } from "./7";
+import {
+  Hand,
+  getHandInfo,
+  getRanksAndWInningInfo,
+  getRanksHands,
+  letterToNumber,
+} from "./7";
 
 test("should determine a 5 of a kind ", () => {
   const hand = getHandInfo("AAAAA");
@@ -119,6 +125,26 @@ test("should determine rank order example from page", () => {
     { hand: "KK677", bid: 28 },
     { hand: "T55J5", bid: 684 },
     { hand: "QQQJA", bid: 483 },
+  ]);
+});
+
+test("should determine and assign rank order example from page", () => {
+  const hands = [
+    { hand: "32T3K", bid: 765 },
+    { hand: "T55J5", bid: 684 },
+    { hand: "KK677", bid: 28 },
+    { hand: "KTJJT", bid: 220 },
+    { hand: "QQQJA", bid: 483 },
+  ];
+
+  const result = getRanksAndWInningInfo(hands);
+
+  assert.deepEqual(result, [
+    { hand: "32T3K", bid: 765, rank: 1, winnings: 765 },
+    { hand: "KTJJT", bid: 220, rank: 2, winnings: 220 * 2 },
+    { hand: "KK677", bid: 28, rank: 3, winnings: 28 * 3 },
+    { hand: "T55J5", bid: 684, rank: 4, winnings: 684 * 4 },
+    { hand: "QQQJA", bid: 483, rank: 5, winnings: 483 * 5 },
   ]);
 });
 

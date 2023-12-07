@@ -66,10 +66,11 @@ interface HandInfo {
   hand: string;
   bid: number;
   rank?: number;
+  winnings?: number;
 }
 
 export function getRanksHands(handInfos: HandInfo[]): HandInfo[] {
-  const rankedHands = handInfos.sort((a, b) => {
+  let rankedHands = handInfos.sort((a, b) => {
     const aHand = getHandInfo(a.hand);
     const bHand = getHandInfo(b.hand);
 
@@ -93,6 +94,18 @@ export function getRanksHands(handInfos: HandInfo[]): HandInfo[] {
     }
     return 0;
   });
+
+  return rankedHands;
+}
+
+export function getRanksAndWInningInfo(handInfos: HandInfo[]): HandInfo[] {
+  let rankedHands = getRanksHands(handInfos);
+
+  rankedHands = rankedHands.map((h, i) => ({
+    ...h,
+    rank: i + 1,
+    winnings: (i + 1) * h.bid,
+  }));
 
   return rankedHands;
 }

@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import test from "node:test";
-import { Hand, getHandInfo } from "./7";
+import { Hand, getHandInfo, getRanksHands, letterToNumber } from "./7";
 
 test("should determine a 5 of a kind ", () => {
   const hand = getHandInfo("AAAAA");
@@ -72,4 +72,44 @@ test("should determine a highCard ", () => {
       `${handString} should be highCard`
     );
   });
+});
+
+test("should determine a highCard ", () => {
+  ["12345", "6789A", "QKJA3"].forEach((handString) => {
+    assert.equal(
+      getHandInfo(handString),
+      Hand.highCard,
+      `${handString} should be highCard`
+    );
+  });
+});
+
+test("should determine a highCard ", () => {
+  const hands = [
+    { hand: "13333", bid: 6 },
+    { hand: "53333", bid: 1 },
+    { hand: "23333", bid: 2 },
+    { hand: "43333", bid: 3 },
+  ];
+
+  const result = getRanksHands(hands);
+
+  assert.deepEqual(result, [
+    { hand: "53333", bid: 1 },
+    { hand: "43333", bid: 3 },
+    { hand: "23333", bid: 2 },
+    { hand: "13333", bid: 6 },
+  ]);
+});
+
+// RANKING ORDER
+test("should determine a letter ", () => {
+  const cards = "123456789TJQKA";
+
+  const numbers = cards.split("").map((card) => {
+    const number = letterToNumber(card);
+    return number;
+  });
+
+  assert.deepEqual(numbers, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
 });

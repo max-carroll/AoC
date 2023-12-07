@@ -61,3 +61,61 @@ export function getHandInfo(hand: string): Hand {
 
   return resultingHand;
 }
+
+interface HandInfo {
+  hand: string;
+  bid: number;
+  rank?: number;
+}
+
+export function getRanksHands(handInfos: HandInfo[]): HandInfo[] {
+  const rankedHands = handInfos.sort((a, b) => {
+    const aHand = getHandInfo(a.hand);
+    const bHand = getHandInfo(b.hand);
+
+    if (aHand < bHand) {
+      return 1;
+    } else if (aHand > bHand) {
+      return -1;
+    } else if (aHand === bHand) {
+      for (let i = 0; i <= 4; i++) {
+        const aa = letterToNumber(a.hand[i]);
+        const bb = letterToNumber(b.hand[i]);
+
+        if (aa < bb) {
+          return 1;
+        } else if (aa > bb) {
+          return -1;
+        } else {
+          continue;
+        }
+      }
+    }
+    return 0;
+  });
+
+  return rankedHands;
+}
+
+export function letterToNumber(letter: string): number {
+  const num = parseInt(letter, 10);
+
+  if (!isNaN(num)) {
+    return num;
+  }
+
+  switch (letter) {
+    case "T":
+      return 10;
+    case "J":
+      return 11;
+    case "Q":
+      return 12;
+    case "K":
+      return 13;
+    case "A":
+      return 14;
+  }
+
+  throw new Error("didnt get the number");
+}

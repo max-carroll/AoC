@@ -21,8 +21,6 @@ export function getHandInfo(hand: string, jsAreWild = false): Hand {
     map.set(card, currentNumber);
   }
 
-  const handKindMap = new Map<Hand, number>();
-
   let hasA3OfAKind = false;
   let numberOfPairs = 0;
 

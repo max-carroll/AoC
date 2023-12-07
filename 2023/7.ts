@@ -51,5 +51,9 @@ export function getHandInfo(hand: string): Hand {
     return Hand.threeOfAKind;
   }
 
+  if (numberOfPairs === 2) {
+    return Hand.twoPair;
+  }
+
   return resultingHand;
 }

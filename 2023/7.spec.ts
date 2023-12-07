@@ -43,3 +43,13 @@ test("should determine a three of a kind  ", () => {
     );
   });
 });
+
+test("should determine a 2 pair ", () => {
+  ["AA664", "AA466"].forEach((handString) => {
+    assert.equal(
+      getHandInfo(handString),
+      Hand.twoPair,
+      `${handString} should be twoPair`
+    );
+  });
+});

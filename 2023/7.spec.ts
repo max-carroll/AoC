@@ -63,3 +63,13 @@ test("should determine a pair ", () => {
     );
   });
 });
+
+test("should determine a highCard ", () => {
+  ["12345", "6789A", "QKJA3"].forEach((handString) => {
+    assert.equal(
+      getHandInfo(handString),
+      Hand.highCard,
+      `${handString} should be highCard`
+    );
+  });
+});

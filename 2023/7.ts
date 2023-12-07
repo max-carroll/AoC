@@ -47,5 +47,9 @@ export function getHandInfo(hand: string): Hand {
     return Hand.fullHouse;
   }
 
+  if (hasA3) {
+    return Hand.threeOfAKind;
+  }
+
   return resultingHand;
 }

@@ -27,3 +27,19 @@ test("should determine a full house ", () => {
 
   assert.equal(hand, Hand.fullHouse);
 });
+
+test("should determine a full house ", () => {
+  const hand = getHandInfo("AAA66");
+
+  assert.equal(hand, Hand.fullHouse);
+});
+
+test("should determine a three of a kind  ", () => {
+  ["AAA64", "A6A4A"].forEach((handString) => {
+    assert.equal(
+      getHandInfo(handString),
+      Hand.threeOfAKind,
+      `${handString} should be threeOfAKind`
+    );
+  });
+});

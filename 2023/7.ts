@@ -74,18 +74,18 @@ export function getRanksHands(handInfos: HandInfo[]): HandInfo[] {
     const bHand = getHandInfo(b.hand);
 
     if (aHand < bHand) {
-      return 1;
-    } else if (aHand > bHand) {
       return -1;
+    } else if (aHand > bHand) {
+      return +1;
     } else if (aHand === bHand) {
       for (let i = 0; i <= 4; i++) {
         const aa = letterToNumber(a.hand[i]);
         const bb = letterToNumber(b.hand[i]);
 
         if (aa < bb) {
-          return 1;
-        } else if (aa > bb) {
           return -1;
+        } else if (aa > bb) {
+          return +1;
         } else {
           continue;
         }

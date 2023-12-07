@@ -84,7 +84,7 @@ test("should determine a highCard ", () => {
   });
 });
 
-test("should determine a highCard ", () => {
+test("should determine rank order", () => {
   const hands = [
     { hand: "13333", bid: 6 },
     { hand: "53333", bid: 1 },
@@ -95,10 +95,30 @@ test("should determine a highCard ", () => {
   const result = getRanksHands(hands);
 
   assert.deepEqual(result, [
-    { hand: "53333", bid: 1 },
-    { hand: "43333", bid: 3 },
-    { hand: "23333", bid: 2 },
     { hand: "13333", bid: 6 },
+    { hand: "23333", bid: 2 },
+    { hand: "43333", bid: 3 },
+    { hand: "53333", bid: 1 },
+  ]);
+});
+
+test("should determine rank order example from page", () => {
+  const hands = [
+    { hand: "32T3K", bid: 765 },
+    { hand: "T55J5", bid: 684 },
+    { hand: "KK677", bid: 28 },
+    { hand: "KTJJT", bid: 220 },
+    { hand: "QQQJA", bid: 483 },
+  ];
+
+  const result = getRanksHands(hands);
+
+  assert.deepEqual(result, [
+    { hand: "32T3K", bid: 765 },
+    { hand: "KTJJT", bid: 220 },
+    { hand: "KK677", bid: 28 },
+    { hand: "T55J5", bid: 684 },
+    { hand: "QQQJA", bid: 483 },
   ]);
 });
 

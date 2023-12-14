@@ -1,4 +1,9 @@
-import { getMatrix, matrixBackToString } from "./14";
+import {
+  calculateScore,
+  getMatrix,
+  matrixBackToString,
+  tiltLeverNorth,
+} from "./14";
 import test from "node:test";
 import assert from "node:assert";
 
@@ -28,8 +33,27 @@ test("can turn matrix back to string", () => {
 });
 
 test("shift things up", () => {
-  // prettier-ignore-start
-  const ex1 = `O....#....
-O.OO#....#`;
-  //prettier-ignore-end
+  const matrix = getMatrix(sampleInput);
+  const shifted = tiltLeverNorth(matrix);
+  const stringified = matrixBackToString(shifted);
+
+  const expected = `OOOO.#.O..
+OO..#....#
+OO..O##..O
+O..#.OO...
+........#.
+..#....#.#
+..O..#.O.O
+..O.......
+#....###..
+#....#....`;
+
+  assert.equal(stringified, expected);
+});
+
+test("calculate score", () => {
+  const matrix = getMatrix(sampleInput);
+  const shifted = tiltLeverNorth(matrix);
+  const score = calculateScore(shifted);
+  assert.equal(score, 136);
 });

@@ -6,6 +6,7 @@ import {
 } from "./14";
 import test from "node:test";
 import assert from "node:assert";
+import { part1Data } from "./14.input";
 
 const sampleInput = `O....#....
 O.OO#....#
@@ -56,4 +57,11 @@ test("calculate score", () => {
   const shifted = tiltLeverNorth(matrix);
   const score = calculateScore(shifted);
   assert.equal(score, 136);
+});
+
+test("calculate score part1", () => {
+  const matrix = getMatrix(part1Data);
+  const shifted = tiltLeverNorth(matrix);
+  const score = calculateScore(shifted);
+  assert.equal(score, 108813); // TOO LOW apparently
 });

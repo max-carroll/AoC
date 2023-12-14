@@ -56,7 +56,7 @@ export function tiltLeverNorth(matrix: Matrix): Matrix {
 
 export function calculateScore(matrix: Matrix): number {
   let currentScore = 0;
-  for (let line = matrix.length - 1; line--; ) {
+  for (let line = matrix.length - 1; line >= 0; line--) {
     const scoreForEach = matrix.length - line;
 
     const numberOfRock = matrix[line].filter((c) => c === "O").length;

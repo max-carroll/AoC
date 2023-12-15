@@ -115,13 +115,18 @@ export function calculateScore(matrix: Matrix): number {
   return currentScore;
 }
 
-export function cycleThroughNorthWestSouthEast(m: Matrix): Matrix {
+export function cycleThroughNorthWestSouthEast(
+  m: Matrix,
+  numberOfCycles = 1
+): Matrix {
   let copy = cloneMatrix(m);
 
-  copy = tiltLeverNorth(copy);
-  copy = tiltLeverWest(copy);
-  copy = tiltLeverSouth(copy);
-  copy = tiltLeverEast(copy);
+  for (let i = 1; i <= numberOfCycles; i++) {
+    copy = tiltLeverNorth(copy);
+    copy = tiltLeverWest(copy);
+    copy = tiltLeverSouth(copy);
+    copy = tiltLeverEast(copy);
+  }
 
   return copy;
 }

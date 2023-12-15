@@ -167,3 +167,43 @@ test("should look like this after one cycle", () => {
 
   assert.equal(actualString, expected);
 });
+
+test("should look like this after two cycle", () => {
+  const matrix = getMatrix(sampleInput);
+  const cycle2 = cycleThroughNorthWestSouthEast(matrix, 2);
+
+  const expected = `.....#....
+....#...O#
+.....##...
+..O#......
+.....OOO#.
+.O#...O#.#
+....O#...O
+.......OOO
+#..OO###..
+#.OOO#...O`;
+
+  const actualString = matrixBackToString(cycle2);
+
+  assert.equal(actualString, expected);
+});
+
+test("should look like this after three cycle", () => {
+  const matrix = getMatrix(sampleInput);
+  const cycle3 = cycleThroughNorthWestSouthEast(matrix, 3);
+
+  const expected = `.....#....
+....#...O#
+.....##...
+..O#......
+.....OOO#.
+.O#...O#.#
+....O#...O
+.......OOO
+#...O###.O
+#.OOO#...O`;
+
+  const actualString = matrixBackToString(cycle3);
+
+  assert.equal(actualString, expected);
+});

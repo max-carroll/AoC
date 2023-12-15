@@ -1,6 +1,7 @@
 // 14.ts
 
 import { SumArray } from "../utils";
+import { part1Data } from "./14.input";
 
 // 10*5 =50
 // 2 x9 = 18
@@ -122,6 +123,10 @@ export function cycleThroughNorthWestSouthEast(
   let copy = cloneMatrix(m);
 
   for (let i = 1; i <= numberOfCycles; i++) {
+    if (i % 1000 === 0) {
+      console.log(`${new Date()} - on iteration ${i}`);
+    }
+
     copy = tiltLeverNorth(copy);
     copy = tiltLeverWest(copy);
     copy = tiltLeverSouth(copy);
@@ -132,3 +137,38 @@ export function cycleThroughNorthWestSouthEast(
 }
 
 const cloneMatrix = (m: Matrix) => JSON.parse(JSON.stringify(m));
+
+function lookForPatterns() {
+  const matrix = getMatrix(part1Data);
+
+  const data: Array<any> = [];
+
+  let copy = cloneMatrix(matrix);
+  for (let i = 1; i <= 1000; i++) {
+    copy = tiltLeverNorth(copy);
+    copy = tiltLeverWest(copy);
+    copy = tiltLeverSouth(copy);
+    copy = tiltLeverEast(copy);
+
+    const stringified = matrixBackToString(copy);
+    const hash = cyrb53(stringified);
+
+    const count = data.filter((d) => d.matrix === stringified).length;
+
+    data.push({ iteration: i, count, hash });
+  }
+
+  console.table(data);
+}
+
+const cyrb53 = (str: string) => {
+  let hash = 0;
+  for (let i = 0, len = str.length; i < len; i++) {
+    let chr = str.charCodeAt(i);
+    hash = (hash << 5) - hash + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+};
+
+lookForPatterns();

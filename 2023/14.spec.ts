@@ -207,3 +207,16 @@ test("should look like this after three cycle", () => {
 
   assert.equal(actualString, expected);
 });
+
+// test("PART2 - answer https://adventofcode.com/2023/day/14 ", () => {
+//   const matrix = getMatrix(part1Data);
+//   const numberOfCycles = 1_000_000_000;
+//   const fullyShakenMatrix = cycleThroughNorthWestSouthEast(
+//     matrix,
+//     numberOfCycles
+//   );
+
+//   const score = calculateScore(fullyShakenMatrix);
+
+//   assert.equal(score, 100);
+// });

@@ -3,6 +3,7 @@ import {
   getMatrix,
   matrixBackToString,
   tiltLeverNorth,
+  tiltLeverSouth,
   tiltLeverWest,
 } from "./14";
 import test from "node:test";
@@ -85,6 +86,27 @@ O....#OO..
 O.........
 #....###..
 #....#....`;
+
+  assert.equal(stringified, expected);
+});
+
+test("first tilt south", () => {
+  const matrix = getMatrix(sampleInput);
+  const shiftedNorth = tiltLeverNorth(matrix);
+  const shiftedWest = tiltLeverWest(shiftedNorth);
+  const shiftedSouth = tiltLeverSouth(shiftedWest);
+  const stringified = matrixBackToString(shiftedSouth);
+
+  const expected = `.....#....
+....#.O..#
+O..O.##...
+O.O#......
+O.O....O#.
+O.#..O.#.#
+O....#....
+OO....OO..
+#O...###..
+#O..O#....`;
 
   assert.equal(stringified, expected);
 });

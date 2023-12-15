@@ -86,6 +86,13 @@ export function tiltLeverWest(matrix: Matrix): Matrix {
   return copy;
 }
 
+export function tiltLeverSouth(matrix: Matrix): Matrix {
+  let copy: Matrix = JSON.parse(JSON.stringify(matrix));
+  copy.reverse();
+  const reverseTitledNorth = tiltLeverNorth(copy);
+  return reverseTitledNorth.reverse();
+}
+
 export function calculateScore(matrix: Matrix): number {
   let currentScore = 0;
   for (let line = matrix.length - 1; line >= 0; line--) {

@@ -50,7 +50,39 @@ export function tiltLeverNorth(matrix: Matrix): Matrix {
       }
     }
   }
+  return copy;
+}
 
+export function tiltLeverWest(matrix: Matrix): Matrix {
+  let copy: Matrix = JSON.parse(JSON.stringify(matrix));
+
+  for (let line = 0; line <= copy.length - 1; line++) {
+    for (let column = 1; column <= copy[0].length - 1; column++) {
+      const currentItem = copy[line][column];
+
+      if (currentItem === "O") {
+        let newBestLeftness = column;
+        for (
+          let currentlyInspectedLeftness = column - 1;
+          currentlyInspectedLeftness >= 0;
+          currentlyInspectedLeftness--
+        ) {
+          const inspected = copy[line][currentlyInspectedLeftness];
+          if (inspected === ".") {
+            newBestLeftness = currentlyInspectedLeftness;
+          } else if (inspected === "O" || inspected === "#") {
+            // cant go any further
+            break;
+          }
+        }
+
+        if (newBestLeftness !== column) {
+          copy[line][newBestLeftness] = "O"; // O has gone up to maximum level
+          copy[line][column] = "."; // A . replaced it
+        }
+      }
+    }
+  }
   return copy;
 }
 

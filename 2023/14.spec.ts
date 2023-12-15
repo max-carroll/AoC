@@ -1,7 +1,9 @@
 import {
   calculateScore,
+  cycleThroughNorthWestSouthEast,
   getMatrix,
   matrixBackToString,
+  tiltLeverEast,
   tiltLeverNorth,
   tiltLeverSouth,
   tiltLeverWest,
@@ -109,4 +111,59 @@ OO....OO..
 #O..O#....`;
 
   assert.equal(stringified, expected);
+});
+
+test("first tilt EAST", () => {
+  const matrix = getMatrix(sampleInput);
+  const shiftedNorth = tiltLeverNorth(matrix);
+  const shiftedWest = tiltLeverWest(shiftedNorth);
+  const shiftedSouth = tiltLeverSouth(shiftedWest);
+  const shiftedEast = tiltLeverEast(shiftedSouth);
+  const stringified = matrixBackToString(shiftedEast);
+
+  const expected = `.....#....
+....#...O#
+...OO##...
+.OO#......
+.....OOO#.
+.O#...O#.#
+....O#....
+......OOOO
+#...O###..
+#..OO#....`;
+
+  assert.equal(stringified, expected);
+
+  const expectedAsMatrix = getMatrix(expected);
+
+  assert.deepEqual(shiftedEast[0], expectedAsMatrix[0]);
+  assert.deepEqual(shiftedEast[1], expectedAsMatrix[1]);
+  assert.deepEqual(shiftedEast[2], expectedAsMatrix[2]);
+  assert.deepEqual(shiftedEast[3], expectedAsMatrix[3]);
+  assert.deepEqual(shiftedEast[4], expectedAsMatrix[4]);
+  assert.deepEqual(shiftedEast[5], expectedAsMatrix[5]);
+  assert.deepEqual(shiftedEast[6], expectedAsMatrix[6]);
+  assert.deepEqual(shiftedEast[7], expectedAsMatrix[7]);
+  assert.deepEqual(shiftedEast[8], expectedAsMatrix[8]);
+  assert.deepEqual(shiftedEast[9], expectedAsMatrix[9]);
+});
+
+test("should look like this after one cycle", () => {
+  const matrix = getMatrix(sampleInput);
+  const cycle1 = cycleThroughNorthWestSouthEast(matrix);
+
+  const expected = `.....#....
+....#...O#
+...OO##...
+.OO#......
+.....OOO#.
+.O#...O#.#
+....O#....
+......OOOO
+#...O###..
+#..OO#....`;
+
+  const actualString = matrixBackToString(cycle1);
+
+  assert.equal(actualString, expected);
 });

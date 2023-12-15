@@ -93,6 +93,15 @@ export function tiltLeverSouth(matrix: Matrix): Matrix {
   return reverseTitledNorth.reverse();
 }
 
+export function tiltLeverEast(matrix: Matrix): Matrix {
+  let copy: Matrix = JSON.parse(JSON.stringify(matrix));
+
+  copy = copy.map((l) => l.reverse());
+  let reverseTiltedWest = tiltLeverWest(copy);
+  reverseTiltedWest = reverseTiltedWest.map((l) => l.reverse());
+  return reverseTiltedWest;
+}
+
 export function calculateScore(matrix: Matrix): number {
   let currentScore = 0;
   for (let line = matrix.length - 1; line >= 0; line--) {
@@ -105,3 +114,16 @@ export function calculateScore(matrix: Matrix): number {
 
   return currentScore;
 }
+
+export function cycleThroughNorthWestSouthEast(m: Matrix): Matrix {
+  let copy = cloneMatrix(m);
+
+  copy = tiltLeverNorth(copy);
+  copy = tiltLeverWest(copy);
+  copy = tiltLeverSouth(copy);
+  copy = tiltLeverEast(copy);
+
+  return copy;
+}
+
+const cloneMatrix = (m: Matrix) => JSON.parse(JSON.stringify(m));

@@ -39,3 +39,42 @@ export function getScore(series: string): number {
 
   return result;
 }
+
+// PART 2
+
+export interface Box {
+  lenses: Array<{
+    label: string;
+    focal: number;
+  }>;
+}
+
+export function createBoxs(input: string): Record<number, Box> {
+  const boxes: Record<number, Box> = {};
+
+  const series = input.split(",");
+  for (let element of series) {
+    let label: string = element.match(/[a-z]+/)![0];
+    const boxNumber = getHash(label);
+    const currentBox = boxes[boxNumber] ?? { lenses: [] };
+    let focal = 0;
+    if (element.includes("=")) {
+      const split = element.split("=");
+      focal = parseInt(split[1]);
+
+      const existingLens = currentBox.lenses.find((l) => l.label === label);
+      if (!existingLens) {
+        currentBox.lenses.push({ label, focal });
+      } else {
+        const index = currentBox.lenses.indexOf(existingLens);
+        currentBox.lenses[index] = { label, focal };
+      }
+
+      boxes[boxNumber] = currentBox;
+    } else if (element.includes("-")) {
+      console.log("hellp");
+    }
+  }
+
+  return boxes;
+}

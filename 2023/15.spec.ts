@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert";
-import { getHash, getScore } from "./15";
+import { Box, createBoxs, getHash, getScore } from "./15";
+import { part1Input } from "./15.raw";
 
 test("char codes - H", () => {
   assert.equal(getHash("H"), 200);
@@ -31,4 +32,21 @@ test("getScore example rn=1", () => {
 test("getScore example 2 combined", () => {
   const input = "rn=1,cm-";
   assert.equal(getScore(input), 30 + 253);
+});
+
+test("p1 answer", () => {
+  const result = getScore(part1Input);
+  assert.equal(result, 510273);
+});
+
+test("get Box step 1", () => {
+  const input = "rn=1";
+
+  const expected = {
+    0: {
+      lenses: [{ label: "rn", focal: 1 }],
+    },
+  };
+
+  assert.deepEqual(createBoxs(input), expected);
 });

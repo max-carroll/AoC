@@ -74,6 +74,63 @@ export function getNumberOfSteps(
   return numberOfSteps;
 }
 
+export function getGhostNumberOfSteps(
+  input: string | GameData,
+  log = false
+): number {
+  if (typeof input === "string") {
+    input = getGameData(input);
+  }
+
+  const { instructions, map } = input as GameData;
+
+  let allAtZ = false;
+  let numberOfSteps = 1;
+
+  let currentJunctions = Object.entries(map)
+    .filter(([key]) => key.endsWith("A"))
+    .map(([key, value]) => ({
+      key: key,
+      choices: value,
+    }));
+
+  // console.log(currentJunctions);
+
+  while (allAtZ === false) {
+    const i = (numberOfSteps - 1) % instructions.length;
+    const leftOrRight = instructions[i] as "L" | "R";
+
+    const nextKeys = currentJunctions.map(
+      (junction) => junction.choices[leftOrRight]
+    ) as Array<string>;
+
+    const keysWithZ = nextKeys.filter((k) => k.endsWith("Z"));
+    if (keysWithZ.length >= 3) {
+      console.log(numberOfSteps, nextKeys, keysWithZ);
+    }
+    if (keysWithZ.length === nextKeys.length) {
+      break;
+    }
+    // setup things for next bit round the loop
+
+    for (let x = 0; x < nextKeys.length; x++) {
+      const key = nextKeys[x];
+      const junction = map[key];
+      currentJunctions[x] = { key, choices: junction };
+    }
+    // console.log(
+    //   `${new Date()} | ${i} | ${numberOfSteps} | ${JSON.stringify(nextKeys)}`
+    // );
+
+    numberOfSteps++;
+  }
+
+  console.log("Total steps: ", numberOfSteps);
+  return numberOfSteps;
+}
+
+getGhostNumberOfSteps(realGameData);
+
 // getNumberOfSteps(realData, true); // 5219419
 
 /**

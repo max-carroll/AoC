@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert";
-import { Box, createBoxs, getHash, getScore } from "./15";
+import { Box, createBoxs, getHash, getScore, getScoreFromBoxes } from "./15";
 import { part1Input } from "./15.raw";
 
 test("char codes - H", () => {
@@ -137,4 +137,13 @@ test("get Box step last one", () => {
   };
 
   assert.deepEqual(createBoxs(input), expected);
+});
+
+test("calculate score box example part2", () => {
+  const input = "rn=1,cm-,qp=3,cm=2,qp-,pc=4,ot=9,ab=5,pc-,pc=6,ot=7";
+  const boxes = createBoxs(input);
+
+  const result = getScoreFromBoxes(boxes);
+
+  assert.deepEqual(result, 145);
 });

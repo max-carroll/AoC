@@ -77,3 +77,18 @@ export function createBoxs(input: string): Record<number, Box> {
 
   return boxes;
 }
+
+export function getScoreFromBoxes(boxes: Record<number, Box>): number {
+  let totalScore = 0;
+  for (var [boxNumberString, box] of Object.entries(boxes)) {
+    const boxNumber = parseInt(boxNumberString);
+
+    let boxScore = 0;
+    box.lenses.forEach(({ focal }, index) => {
+      const lensSlot = index + 1;
+      boxScore += (boxNumber + 1) * lensSlot * focal;
+    });
+    totalScore += boxScore;
+  }
+  return totalScore;
+}

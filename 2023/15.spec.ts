@@ -50,3 +50,66 @@ test("get Box step 1", () => {
 
   assert.deepEqual(createBoxs(input), expected);
 });
+
+test("get Box step 2", () => {
+  const input = "rn=1,cm-";
+
+  const expected = {
+    0: {
+      lenses: [{ label: "rn", focal: 1 }],
+    },
+  };
+
+  assert.deepEqual(createBoxs(input), expected);
+});
+
+test("get Box step 3", () => {
+  const input = "rn=1,cm-,qp=3";
+
+  const expected = {
+    0: {
+      lenses: [{ label: "rn", focal: 1 }],
+    },
+    1: {
+      lenses: [{ label: "qp", focal: 3 }],
+    },
+  };
+
+  assert.deepEqual(createBoxs(input), expected);
+});
+
+test("get Box step 4", () => {
+  const input = "rn=1,cm-,qp=3,cm=2";
+
+  const expected = {
+    0: {
+      lenses: [
+        { label: "rn", focal: 1 },
+        { label: "cm", focal: 2 },
+      ],
+    },
+    1: {
+      lenses: [{ label: "qp", focal: 3 }],
+    },
+  };
+
+  assert.deepEqual(createBoxs(input), expected);
+});
+
+test("get Box step 5", () => {
+  const input = "rn=1,cm-,qp=3,cm=2,qp-";
+
+  const expected = {
+    0: {
+      lenses: [
+        { label: "rn", focal: 1 },
+        { label: "cm", focal: 2 },
+      ],
+    },
+    1: {
+      lenses: [],
+    },
+  };
+
+  assert.deepEqual(createBoxs(input), expected);
+});

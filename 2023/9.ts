@@ -7,15 +7,17 @@ export function getEndNumbers(input: string): number {
   let indexOfSequenceInMatrix = 0;
 
   let actualRealAnswer = 0;
+  let part2Answer = 0;
   for (var sequence of matrix) {
     const triangle = getCurrentTriangle(sequence, indexOfSequenceInMatrix);
     results.push(triangle);
     actualRealAnswer += triangle.finalNumber;
     indexOfSequenceInMatrix++;
+    part2Answer += triangle.finalNewNumber;
   }
 
   console.table(results);
-  console.log({ actualRealAnswer });
+  console.log({ actualRealAnswer, part2Answer });
 
   return actualRealAnswer;
 }
@@ -59,13 +61,21 @@ function getCurrentTriangle(
     const newNumberInSequence = previousLastNumber + currentLastOneInSequence;
 
     currentTriangle[lineNumber].push(newNumberInSequence);
+
+    // could probably also calculate the first number in the sequence
+    const currentFirstNumber = currentTriangle[lineNumber][0];
+    const previousFirstNumber = currentTriangle[lineNumber - 1][0];
+    const newFirstNumber = currentFirstNumber - previousFirstNumber;
+    currentTriangle[lineNumber].unshift(newFirstNumber);
   }
   const finalNumber: number = currentTriangle.at(-1)?.at(-1)!;
+  const finalNewNumber: number = currentTriangle.at(-1)?.at(0)!;
   return {
     indexOfSequenceInMatrix,
     // currentTriangle,
     startingNumbers: JSON.stringify(currentTriangle.at(-1)),
     finalNumber,
+    finalNewNumber,
   };
 }
 

@@ -69,11 +69,10 @@ export function createBoxs(input: string): Record<number, Box> {
         const index = currentBox.lenses.indexOf(existingLens);
         currentBox.lenses[index] = { label, focal };
       }
-
-      boxes[boxNumber] = currentBox;
     } else if (element.includes("-")) {
-      console.log("hellp");
+      currentBox.lenses = currentBox.lenses.filter((l) => l.label !== label);
     }
+    boxes[boxNumber] = currentBox;
   }
 
   return boxes;

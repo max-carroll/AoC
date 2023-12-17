@@ -147,3 +147,11 @@ test("calculate score box example part2", () => {
 
   assert.deepEqual(result, 145);
 });
+
+test("calculate the final answer to part2", () => {
+  const boxes = createBoxs(part1Input);
+
+  const result = getScoreFromBoxes(boxes);
+
+  assert.deepEqual(result, 212449); // attempt 1
+});

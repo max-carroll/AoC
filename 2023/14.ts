@@ -152,13 +152,14 @@ function lookForPatterns() {
 
     const stringified = matrixBackToString(copy);
     const hash = cyrb53(stringified);
+    const score = calculateScore(copy);
 
     const count = data.filter((d) => d.matrix === stringified).length;
 
-    data.push({ iteration: i, count, hash });
+    data.push({ iteration: i, count, hash, score });
   }
 
-  console.table(data);
+  console.table(data); // <=== THIS IS WHERE THE MAGIC HAPPENS 🪄
 }
 
 const cyrb53 = (str: string) => {

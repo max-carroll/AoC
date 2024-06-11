@@ -2,6 +2,9 @@ import assert from "node:assert";
 import test from "node:test";
 import { getLowestCommonMultiple, isPrime } from "./utils";
 
+
+// 16 should be an interesting case as its 2,8 => 8 has to be split up again
+
 // test("12, 16, 24 should return 12", () => {
 //   const result = getLowestCommonMultiple([12, 16, 24]);
 
